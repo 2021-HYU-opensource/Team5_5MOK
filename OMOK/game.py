@@ -164,7 +164,7 @@ class OMOK:
     if self.turn == STONE.BLACK:
       screen.fill((255,0,0))
     else:
-      screen.fill((0, 255, 0))
+      screen.fill((0, 128, 0))
     sf = pygame.font.SysFont("Monospace",40,bold=True)
     textStr = " "
     text = sf.render(textStr,True,(0,172,255))
