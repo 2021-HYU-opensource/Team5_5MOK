@@ -1,5 +1,3 @@
-
-
 import pygame
 import os
 import sys
@@ -162,9 +160,9 @@ class OMOK:
   def gameEnd(self):
 
     if self.turn == STONE.BLACK:
-      screen.fill((0,0,0))
+      screen.fill((255,0,0))
     else:
-      screen.fill((0xff, 0xff, 0xff))
+      screen.fill((0, 128, 0))
     sf = pygame.font.SysFont("Monospace",40,bold=True)
     textStr = "WIN"
     text = sf.render(textStr,True,(0,172,255))
@@ -212,7 +210,7 @@ while omok.run:
     omok.proc(pos)
 
   #DRAW
-  screen.fill((255,255,255))
+  screen.fill((198, 139, 18))
   omok.draw()
 
 
