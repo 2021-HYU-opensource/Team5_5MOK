@@ -11,7 +11,7 @@ class STONE(Enum):
   BLACK = auto()
   WHITE = auto()
 
-WIN_STONE_COUNT = 5
+WIN_STONE_COUNT = 4
 
 print(list(STONE))
 
