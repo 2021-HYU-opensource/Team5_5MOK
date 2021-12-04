@@ -23,15 +23,15 @@ clock = pygame.time.Clock()
 
 class OMOK:
   def __init__(self, width, height, mode):
-    self.run = True
-    self.width = width
-    self.height = height
+    self.run = True 
+    self.width = width 
+    self.height = height 
     self.mode = mode
     self.map = [[STONE.NONE] * (width + 1) for i in range(height + 1)]
     self.stoneRadius = (screen.get_height() / height+ screen.get_width() / width) / 4 # / 2 / 2
-    self.turn = STONE.BLACK
+    self.turn = STONE.BLACK 
     #game init
-    pygame.init()
+    pygame.init() 
 
   def posToStoneIdx(self, pos):
     for i in range(self.width + 1):
@@ -159,12 +159,18 @@ class OMOK:
           pygame.draw.ellipse(screen, (0,255,0), pygame.Rect([width * i - self.stoneRadius, height * j - self.stoneRadius], (self.stoneRadius * 2, self.stoneRadius * 2)))
           pygame.draw.ellipse(screen, (0,0,0), pygame.Rect([width * i - self.stoneRadius, height * j - self.stoneRadius], (self.stoneRadius * 2, self.stoneRadius * 2)), 2)
 
+
+
   def gameEnd(self):
+
+    returnValue = ""
 
     if self.turn == STONE.BLACK:
       screen.fill((255,0,0))
+      returnValue = "red"
     else:
       screen.fill((0, 128, 0))
+      returnValue = "green"
     sf = pygame.font.SysFont("Monospace",40,bold=True)
     textStr = " "
     text = sf.render(textStr,True,(0,172,255))
@@ -176,48 +182,58 @@ class OMOK:
     text = sf.render(textStr,True,(0,172,255))
     screen.blit(text,(screen.get_width()/2, screen.get_height()/2  + 100))
 
+    return returnValue
+	
+redCount = 0
+greenCount = 0
+
+for _ in range(3):
+
+  omok = OMOK(19, 19, 0)
+	
+  while omok.run:
+    key = 1
+    pos = 0
+    #KEY INPUT
+    for event in pygame.event.get():
+      if event.type == pygame.QUIT:
+	
+        omok.run = False
+        break
+      elif event.type == pygame.KEYDOWN:
+        keyStatus = 1
+        key = event.key
+
+      elif event.type == pygame.KEYUP:
+        keyStatus = 0
+        key = event.key
+      elif event.type == pygame.MOUSEBUTTONDOWN:
+        pos = event.pos
+
+    #UPDATE
+  
+    # print(key)
+    if (pos != 0):
+    
+      omok.proc(pos)
+
+    #DRAW
+    screen.fill((198,139,18))
+    omok.draw()
+
 
     pygame.display.flip()
-    time.sleep(2)
+    clock.tick(10)
 
+  returnValue = ""
+  returnValue = omok.gameEnd()
+  if returnValue == "red":
+    redCount += 1
+  elif returnValue == "green":
+    greenCount += 1
 
+  if redCount == 2 or greenCount == 2:
+    break
 
-
-omok = OMOK(19, 19, 0)
-
-while omok.run:
-  key = 1
-  pos = 0
-  #KEY INPUT
-  for event in pygame.event.get():
-    if event.type == pygame.QUIT:
-
-      omok.run = False
-      break
-    elif event.type == pygame.KEYDOWN:
-      keyStatus = 1
-      key = event.key
-
-    elif event.type == pygame.KEYUP:
-      keyStatus = 0
-      key = event.key
-    elif event.type == pygame.MOUSEBUTTONDOWN:
-      pos = event.pos
-
-  #UPDATE
-  
-  # print(key)
-  if (pos != 0):
-    
-    omok.proc(pos)
-
-  #DRAW
-  screen.fill((198,139,18))
-  omok.draw()
-
-
-
-  pygame.display.flip()
-  clock.tick(10)
-
-omok.gameEnd()
+pygame.display.flip()
+time.sleep(2)
